@@ -37,12 +37,14 @@ def analyze(request):
         params = {'purpose': 'Change To Uppercase', 'analyzed_text': analyzed}
         djtext=analyzed
         # return render(request, 'analyze.html', params)
-    if newlineremover=="on":
-        analyzed=""
+    if newlineremover == 'on':
+        analyzed = ''
         for char in djtext:
-            if char!="\n":
-                analyzed=analyzed+char
-        params = {'purpose': 'Removed NewLines', 'analyzed_text': analyzed}
+            if char != '\n':
+                analyzed+= char
+        params = {'purpose': 'Remove NewLines', 'lineremover': analyzed}
+        return render(request, 'analyze.html', params) 
+
         # Analyze the text
         djtext=analyzed
         # return render(request, 'analyze.html', params)
@@ -60,17 +62,16 @@ def analyze(request):
            if char != ' ':
             analyzed += 1
         params = {'purpose': 'Total characters of user is', 'analyzed_text': analyzed}
-        djtext=analyzed
-        # return render(request, 'analyze.html', params)  
-    
+        # djtext=analyzed
+        return render(request, 'analyze.html', params)  
+
     if(wordscounter=='on'):
         analyzed=0
         words=djtext.split()
         analyzed=len(words)
         params = {'purpose': 'Total characters of user is', 'analyzed_text': analyzed}
-        djtext=analyzed
-
-        # return render(request, 'analyze.html', params)     
+        # djtext=analyzed
+        return render(request, 'analyze.html', params)     
     
     if(lowercase=='on'):
         analyzed=''
@@ -81,10 +82,10 @@ def analyze(request):
 
         # return render(request, 'analyze.html', params) 
 
-
     if(sentencecase=='on'):
         analyzed=djtext
         capital=analyzed.capitalize()
         params = {'purpose': 'Change to sentence case', 'analyzed_text': capital}
         # return render(request, 'analyze.html', params)
     return render(request, 'analyze.html', params)
+    

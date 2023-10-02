@@ -5,7 +5,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css'%}">
     <meta charset="UTF-8">
-    <title>Analyzing Your Text...</title>
+    <title style="font-size: 2000px;">Analyzing Your Text...</title>
 </head>
 <body>
     <div class="navbar">
@@ -25,6 +25,8 @@
 <h1 style="font-size: 50px;">Your Analyzed Text - {{ purpose }}</h1>
 <p>
     <pre style="font-size: 50px;">{{ analyzed_text }}</pre>
+   <div style="font-size: 100px;"> {{lineremover}}</div>
+
 
 </p>
 </body>
