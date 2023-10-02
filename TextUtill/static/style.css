@@ -65,7 +65,8 @@ body{
     width: 3000px;
     height: 500px;
     margin:60px;
-    font-size: 200px;
+    font-size: 100px;
+    border: 10px red solid;
 
 }
 
@@ -88,10 +89,11 @@ body{
     width: 3020px;
     height: 200px;
     font-size: 60px;
-    background-color: rgb(155, 155, 250);
+    background-color: rgb(91, 91, 249);
     margin-left: 60px;
     margin-bottom: 60px;
-    border: rgb(248, 17, 17) solid 10px;
+    border: rgb(7, 234, 102) solid 10px;
+    color: white;
 }
 .button-container input{
     width: 260px;
@@ -102,17 +104,31 @@ body{
     width: 3020px;
     height: 200px;
     font-size: 60px;
-    background-color: rgb(155, 155, 250);
+    background-color: rgb(91,91,249);
     margin-left: 60px;
-    border: red solid 10px;
+    border: rgb(7, 234, 102) solid 10px;
+color: white;
 }
 .button-container1 input{
     width: 260px;
     height: 50px;
     
 }
-.btn:hover{
-    background-color: whitesmoke;
-    color: red;
+/* Add this CSS to your stylesheet */
+.btn{
+    width: 500px;
+    height: 150px; 
+    font-size: 60px;
+    font-weight: bold;
+    color: rgb(225, 223, 234); 
+    margin-left: 1000px;
+    margin-top: 20px; 
+    background-color: rgb(91,91,249);
 
+}
+.btn:hover {
+    background-color: rgb(250, 53, 53); /* Change the background color on hover */
+    color: rgb(247, 242, 244); /* Change the text color on hover */
+    box-shadow: 0 0 10px rgba(210, 188, 188, 0.5); /* Add a shadow on hover */
+    transform: scale(1.2); /* Increase the button size on hover */
 }

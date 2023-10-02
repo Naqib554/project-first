@@ -87,5 +87,9 @@ def analyze(request):
         capital=analyzed.capitalize()
         params = {'purpose': 'Change to sentence case', 'analyzed_text': capital}
         # return render(request, 'analyze.html', params)
+    if(removepunc!='on' and fullcaps!='on' and newlineremover!='on' and extraspaceremover!='on' and wordscounter!='on'
+       and charcounter!='on' and lowercase!='on' and sentencecase!='on' ):
+        return render(request,'message.html')  
+    
     return render(request, 'analyze.html', params)
     
