@@ -1,55 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <meta charset="UTF-8">
     <title>Text Utils</title>
-</head> 
+</head>
+
 <body>
-<div class="page1">
     <div class="navbar">
         <div class="logo">
             <a href="">Text Utill</a>
+            
         </div>
         <div class="navbtn">
+
             <!-- Home button -->
-            <a href="{% url 'index' %}" class="">Home</a>
+            <a href="{% url 'home' %}" class="">Home</a>
             <!-- Contact button -->
             <a href="{% url 'contact' %}" class="">Contact</a>
             <!-- About button -->
             <a href="{% url 'about_view' %}" class="">About</a>
+            <a href="{% url 'logout'%}" class="">Logout</a>
         </div>
-       
     </div>
     <div class="h2">
-        Welcome to the text analyzer. Enter your text below
+        Welcome to the text analyzer. Enter your text below!
     </div>
-    <form action='/analyze' method='post'>
-        {% csrf_token %}
+    <form action='/analyze' method='post'> {% csrf_token %}
+
         <textarea name='text' class="summer"></textarea><br>
-        
+
         <!-- Wrap checkboxes and buttons in a div for one-line display -->
         <div class="button-container">
             <input type="checkbox" name="removepunc"> Remove Punctuations
             <input type="checkbox" name="fullcaps"> UPPERCASE
             <input type="checkbox" name="newlineremover"> New Line Remover
             <input type="checkbox" name="extraspaceremover"> Extra Spaces Remove
-        </div>    
+        </div>
         <div class="button-container1">
-            <input type="checkbox" name="charcounter"> Count The Characters
-            <input type="checkbox" name="wordscounter"> Count The Words 
-            <input type="checkbox" name="lowercase"> Lower Case 
-            <input type="checkbox" name="sentencecase"> Sentence Case 
+            <input type="checkbox" name="charcounter" /> Count The Characters
+            <input type="checkbox" name="wordscounter" /> Count The Words
+            <input type="checkbox" name="lowercase" /> Lower Case
+            <input type="checkbox" name="sentencecase" /> Sentence Case
         </div>
         <br>
-        <div>
-            <button class="btn" type='submit' >Analyze Text</button>
+        <div class="btnbox">
+            <button type="" class="btn1">Analyze Text</button>
         </div>
-        
-     
     </form>
-</div>
 </body>
-</html>
 
+</html>

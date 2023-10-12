@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'style.css'%}">
+    <link rel="stylesheet" href="{% static 'subs.css'%}">
     <meta charset="UTF-8">
     <title style="font-size: 2000px;">Analyzing Your Text...</title>
 </head>
@@ -28,7 +28,8 @@
 <br>
 
 <p>
-    <pre style="font-size: 100px;">{{ analyzed_text }}</pre>
+    <h2 style="font-size: 50px;">The total character:{{ analyzed_text }} </h2></pre>
+    <pre style="font-size: 100px;">
    <div style="font-size: 100px;"> {{lineremover}}</div>
 </p>
 </body>

@@ -25,6 +25,10 @@ SECRET_KEY = 'django-insecure-8k1v876#r)=t-pkd5sr-abp636%6k*w3h4^w*epb#j4ao&flam
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# i add the bellow  setting 
+# settings.py
+
+
 
 ALLOWED_HOSTS = []
 
@@ -75,12 +79,16 @@ WSGI_APPLICATION = 'TextUtill.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "textutill",
+        "USER": "naqib_hangu",
+        "PASSWORD": "HCS120202027n",
+        "HOST": "127.0.0.1",
+        "PORT": "3306",
     }
 }
-
+# superuser password:HCS120202027 remember this
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -119,11 +127,26 @@ USE_TZ = True
 
 # must do this setting when you apply the css in html file 
 # Static files (CSS, JavaScript, images)
+# import os
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# this setting is require for sending email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'naqibhangu1@gmail.com'  # Replace with your Gmail email address
+EMAIL_HOST_PASSWORD = 'fmjl mrbr sggy lsuf'       # Replace with your Gmail password
+EMAIL_USE_TLS = True

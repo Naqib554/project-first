@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from . import views
+from .import views
 
 # Code for video 6
 # urlpatterns = [
@@ -29,10 +29,14 @@ from . import views
 # Code for video 7
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index'),
+    path('',views.signup_page,name='signup_page'),
+    path('login/', views.login_page, name='log'),
+    path('home/',views.homepage,name='home'),
+    path('logout/',views.logoutpage,name='logout'),
     path('analyze', views.analyze, name='analyze'),
     # path('ex1', views.ex1, name='ex1'),
     path('about_view/', views.about_view, name='about_view'),
-    path('contact',views.contact,name='contact')
+    path('contact',views.contact,name='contact'),
+
 
 ]
