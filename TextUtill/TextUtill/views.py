@@ -31,13 +31,20 @@ def signup_page(request):
             global otp
             otp = ''.join([str(random.randint(0, 9)) for _ in range(6)])
             # object: refers a manager perform operation on database User table.
-            my_user=CustomUser.objects.create_user(Uname,otp,Password)
-            subject='Welcome to the Caseconvert.come'
-            message=f'Hi {Uname}  we will help you to converter strings formate into anotther formate'
+            my_user=CustomUser.objects.create_user(Uname,Email,Password)
+            # by below line i store otp in the custom model
+            my_user.otp=otp
+            my_user.save()
+
+
+            subject='Welcome to the TextUtill.come'
+            message=f'''Hi {Uname}  your account has been created successfully in TextUtill.com 
+            we will help you to convert strings formate into anotther formate.
+            '''
             from_email=settings.EMAIL_HOST_USER
             recipient_list=[Email]
             send_mail(subject,message,from_email,recipient_list, fail_silently=False)
-            my_user.save()
+            
             
             return redirect('log')
     
@@ -53,7 +60,7 @@ def login_page(request):
         user=authenticate(request,username=username1,password=password1)
         if user is not None:
             subject=' Email Verification'
-            message=f'Hi{Uname} email verification is required please login with this otp: {otp}'
+            message=f'Hi {Uname} email verification is required please login with this otp: {otp}'
             from_email=settings.EMAIL_HOST_USER
             recipient_list=[Email]
             send_mail(subject,message,from_email,recipient_list,fail_silently=False)
