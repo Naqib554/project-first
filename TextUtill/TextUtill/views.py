@@ -1,9 +1,9 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-
+from .models import CustomUser
+import random
 # these two lines is imported for the wellcome email sending
 from django.core.mail import send_mail
 from django.conf import settings
@@ -20,6 +20,7 @@ def signup_page(request):
     # this line mean that form data is comming
     if request.method=='POST':
         # we store the form data in variables
+        global Uname,Email
         Uname=request.POST.get('username')
         Email=request.POST.get('email')
         Password=request.POST.get('password1')
@@ -27,8 +28,10 @@ def signup_page(request):
         if Password!=Cpassword:
             return HttpResponse("your password and confirm passwrod are not same!!!")
         else:
+            global otp
+            otp = ''.join([str(random.randint(0, 9)) for _ in range(6)])
             # object: refers a manager perform operation on database User table.
-            my_user=User.objects.create_user(Uname,Email,Password)
+            my_user=CustomUser.objects.create_user(Uname,otp,Password)
             subject='Welcome to the Caseconvert.come'
             message=f'Hi {Uname}  we will help you to converter strings formate into anotther formate'
             from_email=settings.EMAIL_HOST_USER
@@ -49,11 +52,34 @@ def login_page(request):
         password1=request.POST.get('pass')
         user=authenticate(request,username=username1,password=password1)
         if user is not None:
+            subject=' Email Verification'
+            message=f'Hi{Uname} email verification is required please login with this otp: {otp}'
+            from_email=settings.EMAIL_HOST_USER
+            recipient_list=[Email]
+            send_mail(subject,message,from_email,recipient_list,fail_silently=False)
             login(request,user)
-            return redirect('home')
+            return redirect('otp_login')
         else:
             return HttpResponse("username or password is incorrect!!!")
     return render(request,'login.html')
+
+
+
+def otp_login(request):
+    if request.method == 'POST':
+        # Get the OTP from the form
+        Otp1= request.POST.get('otp')
+        user=authenticate(otp=Otp1)
+        print("Authenticated User:", user)
+        if user is not None:
+            login(request,user)
+            return redirect('home')
+        else:
+            return HttpResponse('invalid otp please try again ')
+    return render(request, 'otp_login.html')
+        
+
+
 def logoutpage(request):
     logout(request)
     return redirect('log')

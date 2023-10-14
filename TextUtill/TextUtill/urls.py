@@ -31,6 +31,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.signup_page,name='signup_page'),
     path('login/', views.login_page, name='log'),
+    path('otp-login/', views.otp_login, name='otp_login'),
     path('home/',views.homepage,name='home'),
     path('logout/',views.logoutpage,name='logout'),
     path('analyze', views.analyze, name='analyze'),

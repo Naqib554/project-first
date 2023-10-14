@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'TextUtill'
 ]
+
+AUTH_USER_MODEL = 'TextUtill.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
