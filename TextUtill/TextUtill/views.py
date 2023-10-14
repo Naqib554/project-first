@@ -69,10 +69,8 @@ def otp_login(request):
     if request.method == 'POST':
         # Get the OTP from the form
         Otp1= request.POST.get('otp')
-        user=authenticate(otp=Otp1)
-        print("Authenticated User:", user)
-        if user is not None:
-            login(request,user)
+        if otp==Otp1:
+            # login(request,user)
             return redirect('home')
         else:
             return HttpResponse('invalid otp please try again ')
