@@ -1,92 +1,80 @@
-from django.shortcuts import render,redirect
-from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from .models import CustomUser
-import random
-# these two lines is imported for the wellcome email sending
 from django.core.mail import send_mail
 from django.conf import settings
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponse
+from .models import  CustomUser
+import random
 
-
-
-
-
-@login_required(login_url='login')
-def homepage(request):
-    return render(request,"home.html")
 
 def signup_page(request):
-    # this line mean that form data is comming
-    if request.method=='POST':
-        # we store the form data in variables
-        global Uname,Email
-        Uname=request.POST.get('username')
-        Email=request.POST.get('email')
-        Password=request.POST.get('password1')
-        Cpassword=request.POST.get('password2')
-        if Password!=Cpassword:
-            return HttpResponse("your password and confirm passwrod are not same!!!")
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password1')
+        confirm_password = request.POST.get('password2')
+        
+        if password != confirm_password:
+            return HttpResponse("Your password and confirm password are not the same!!!")
         else:
-            global otp
-            otp = ''.join([str(random.randint(0, 9)) for _ in range(6)])
-            # object: refers a manager perform operation on database User table.
-            my_user=CustomUser.objects.create_user(Uname,Email,Password)
-            # by below line i store otp in the custom model
-            my_user.otp=otp
-            my_user.save()
+            # Use the create_user method to create a new user
+            global new_user
+            new_user = CustomUser.objects.create_user(username=username, email=email, password=password)
 
-
-            subject='Welcome to the TextUtill.come'
-            message=f'''Hi {Uname}  your account has been created successfully in TextUtill.com 
-            we will help you to convert strings formate into anotther formate.
-            '''
-            from_email=settings.EMAIL_HOST_USER
-            recipient_list=[Email]
-            send_mail(subject,message,from_email,recipient_list, fail_silently=False)
-            
-            
+            subject = 'Welcome to TextUtill.com'
+            message = f'''Hi {username}, your account has been created successfully on TextUtill.com.
+            We will help you convert strings format into another format.'''
+            from_email = settings.EMAIL_HOST_USER
+            recipient_list = [email]
+            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
             return redirect('log')
-    
-        # check data, IS really comming the form Data?
-        # print(Uname,Email,Password,Cpassword)
-    return render(request,'signup.html')
-
+    return render(request, 'signup.html')
 
 def login_page(request):
-    if request.method=='POST':
-        username1=request.POST.get('username')
-        password1=request.POST.get('pass')
-        user=authenticate(request,username=username1,password=password1)
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('pass')
+
+        # Use the authenticate function to check the credentials
+        user = authenticate(request, username=username, password=password)
         if user is not None:
-            subject=' Email Verification'
-            message=f'Hi {Uname} email verification is required please login with this otp: {otp}'
-            from_email=settings.EMAIL_HOST_USER
-            recipient_list=[Email]
-            send_mail(subject,message,from_email,recipient_list,fail_silently=False)
-            login(request,user)
+            # Use the login function to log the user in
+            login(request, user)
+
+            otp = ''.join([str(random.randint(0, 9)) for _ in range(6)])
+            new_user.otp = otp
+            new_user.save()
+            subject = 'Email Verification'
+            message = f'Hi {username}, email verification is required. Please login with this OTP: {otp}'
+            from_email = settings.EMAIL_HOST_USER
+            recipient_list = [user.email]
+            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
             return redirect('otp_login')
         else:
-            return HttpResponse("username or password is incorrect!!!")
-    return render(request,'login.html')
-
-
+            return HttpResponse("Invalid username or password")
+    return render(request, 'login.html')
 
 def otp_login(request):
     if request.method == 'POST':
-        # Get the OTP from the form
-        Otp1= request.POST.get('otp')
-        if otp==Otp1:
-            # login(request,user)
+        otp = request.POST.get('otp')
+        user_otp = CustomUser.objects.get(otp=otp)
+        if user_otp.otp == otp:
+            user_otp.otp = None
+            user_otp.save()
             return redirect('home')
         else:
-            return HttpResponse('invalid otp please try again ')
+            return HttpResponse("Invalid OTP")
     return render(request, 'otp_login.html')
+
         
 
 
+
+def homepage(request):
+    return render(request,'home.html')
+
 def logoutpage(request):
-    logout(request)
+    # logout(request)
     return redirect('log')
 
 

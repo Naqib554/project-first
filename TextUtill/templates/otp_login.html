@@ -132,7 +132,12 @@ margin-right: 4px;
 
   </style>
 <body>
+  <div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
     <form action="" method="post">
+      <h5>we have sent an email to you please check and verify your account by otp</h5>
         {% csrf_token %}
         <label for="otp">OTP</label>
         <input type="text" placeholder="Enter your OTP" name="otp" id="otp">

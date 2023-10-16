@@ -46,6 +46,8 @@ INSTALLED_APPS = [
 ]
 
 AUTH_USER_MODEL = 'TextUtill.CustomUser'
+# AUTH_USER_MODEL = 'TextUtill.UserOTP'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
