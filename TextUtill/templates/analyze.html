@@ -5,7 +5,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'subs.css'%}">
     <meta charset="UTF-8">
-    <title style="font-size: 2000px;">Analyzing Your Text...</title>
+    <title style="font-size: 100px;">Analyzing Your Text...</title>
 </head>
 <body>
     <div class="navbar">
@@ -22,13 +22,13 @@
                 <a href="{% url 'about_view' %}" class="">About</a>
         </div>
     </div>
-<h1 style="font-size: 150px;">Your Analyzed Text - {{ purpose }}</h1>
+<h1 style="font-size: 50px;">Your Analyzed Text - {{ purpose }}</h1>
 <br>
 <br>
 <br>
 
 <p>
-    <h2 style="font-size: 50px;">The total character:{{ analyzed_text }} </h2></pre>
+    <h2 style="font-size: 50px;">{{ analyzed_text }} </h2></pre>
     <pre style="font-size: 100px;">
    <div style="font-size: 100px;"> {{lineremover}}</div>
 </p>

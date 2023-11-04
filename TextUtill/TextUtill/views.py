@@ -3,7 +3,9 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from .models import  CustomUser
+from django.contrib import messages
 import random
 
 
@@ -14,12 +16,17 @@ def signup_page(request):
         password = request.POST.get('password1')
         confirm_password = request.POST.get('password2')
         
-        if password != confirm_password:
-            return HttpResponse("Your password and confirm password are not the same!!!")
-        else:
+        if password == confirm_password:
+            if CustomUser.objects.filter(username=username).exists():
+                messages.error(request,'Username Taken please choose another name')
+                return redirect('signup_page')
+            elif CustomUser.objects.filter(email=email).exists():
+                messages.error(request,'Email Taken')
+                return redirect('signup_page')
             # Use the create_user method to create a new user
-            global new_user
-            new_user = CustomUser.objects.create_user(username=username, email=email, password=password)
+            else:
+                global new_user
+                new_user = CustomUser.objects.create_user(username=username, email=email, password=password)
 
             subject = 'Welcome to TextUtill.com'
             message = f'''Hi {username}, your account has been created successfully on TextUtill.com.
@@ -28,6 +35,8 @@ def signup_page(request):
             recipient_list = [email]
             send_mail(subject, message, from_email, recipient_list, fail_silently=False)
             return redirect('log')
+        else:
+            return HttpResponse("Your password and confirm password are not the same!!!")
     return render(request, 'signup.html')
 
 def login_page(request):
@@ -69,7 +78,7 @@ def otp_login(request):
         
 
 
-
+@login_required(login_url='log')
 def homepage(request):
     return render(request,'home.html')
 
